@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Legal Administrators — Legal Administration & Consulting</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:      #0b1628;
+    --navy-mid:  #122040;
+    --navy-light:#1a2e55;
+    --teal:      #007b80;
+    --teal-light:#009fa5;
+    --teal-pale: #e6f4f5;
+    --white:     #ffffff;
+    --off-white: #f7f8fa;
+    --rule:      #d6dde8;
+    --muted:     #5c6b80;
+    --text:      #1a2233;
+    --light-text:#8494a8;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Lato', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; }
+
+  /* Top Bar */
+  .top-bar { background: var(--navy); padding: 10px 72px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .top-bar p { font-size: 0.72rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.45); }
+  .top-bar-right { display: flex; gap: 28px; align-items: center; }
+  .top-bar a { font-size: 0.72rem; letter-spacing: 0.06em; color: var(--teal-light); text-decoration: none; transition: color 0.2s; }
+  .top-bar a:hover { color: #fff; }
+  .top-bar-divider { width: 1px; height: 12px; background: rgba(255,255,255,0.15); }
+
+  /* Navbar */
+  nav { position: sticky; top: 0; z-index: 500; background: var(--white); border-bottom: 1px solid var(--rule); padding: 0 72px; display: flex; align-items: stretch; justify-content: space-between; box-shadow: 0 1px 12px rgba(11,22,40,0.06); transition: box-shadow 0.3s; }
+  nav.elevated { box-shadow: 0 2px 24px rgba(11,22,40,0.12); }
+  .logo-wrap { display: flex; align-items: center; gap: 14px; text-decoration: none; padding: 18px 0; }
+  .logo-img { height: 48px; width: auto; object-fit: contain; }
+  .logo-divider { width: 1px; height: 36px; background: var(--rule); }
+  .logo-text-wrap { display: flex; flex-direction: column; justify-content: center; }
+  .logo-name { font-family: 'Libre Baskerville', serif; font-size: 0.95rem; font-weight: 700; color: var(--navy); letter-spacing: 0.01em; line-height: 1.2; }
+  .logo-sub { font-family: 'Lato', sans-serif; font-size: 0.65rem; font-weight: 400; color: var(--teal); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 2px; }
+  .nav-links { display: flex; align-items: stretch; list-style: none; }
+  .nav-links li { display: flex; align-items: stretch; }
+  .nav-links a { display: flex; align-items: center; padding: 0 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: var(--muted); border-bottom: 3px solid transparent; transition: color 0.2s, border-color 0.2s; }
+  .nav-links a:hover { color: var(--navy); border-bottom-color: var(--teal); }
+  .nav-cta { display: flex; align-items: center; padding: 0 28px; background: var(--teal); color: white; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; height: 40px; border-radius: 2px; margin: auto 0 auto 16px; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--navy); }
+
+  /* Hero */
+  .hero { background: var(--navy); min-height: 82vh; display: grid; grid-template-columns: 1fr 420px; align-items: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(-55deg, transparent, transparent 40px, rgba(255,255,255,0.012) 40px, rgba(255,255,255,0.012) 41px); pointer-events: none; }
+  .hero::after { content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 5px; background: var(--teal); }
+  .hero-content { padding: 100px 80px 100px 100px; position: relative; z-index: 1; animation: fadeUp 0.9s cubic-bezier(0.23,1,0.32,1) both; }
+  .hero-rule { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
+  .hero-rule-line { height: 1px; width: 48px; background: var(--teal-light); }
+  .hero-rule-text { font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--teal-light); font-weight: 700; }
+  .hero h1 { font-family: 'EB Garamond', serif; font-size: clamp(2.8rem, 4.5vw, 4.8rem); font-weight: 500; line-height: 1.12; color: var(--white); margin-bottom: 28px; letter-spacing: -0.01em; }
+  .hero h1 em { font-style: italic; color: var(--teal-light); }
+  .hero-sub { font-size: 1rem; color: rgba(255,255,255,0.6); line-height: 1.85; max-width: 520px; margin-bottom: 52px; font-weight: 300; }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--teal); color: white; text-decoration: none; padding: 14px 32px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px; transition: background 0.25s, transform 0.25s; border: 2px solid var(--teal); }
+  .btn-primary:hover { background: var(--teal-light); border-color: var(--teal-light); transform: translateY(-1px); }
+  .btn-primary svg { transition: transform 0.25s; }
+  .btn-primary:hover svg { transform: translateX(4px); }
+  .btn-ghost { display: inline-flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.75); text-decoration: none; padding: 14px 32px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border: 2px solid rgba(255,255,255,0.2); border-radius: 2px; transition: border-color 0.25s, color 0.25s; }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.6); color: white; }
+  .hero-panel { background: rgba(255,255,255,0.04); border-left: 1px solid rgba(255,255,255,0.08); height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 60px 48px; position: relative; z-index: 1; }
+  .hero-panel-title { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .hero-service-list { list-style: none; }
+  .hero-service-list li { display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.6); font-size: 0.87rem; font-weight: 300; transition: color 0.2s, padding-left 0.2s; cursor: default; }
+  .hero-service-list li:hover { color: white; padding-left: 6px; }
+  .hero-service-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
+
+  /* Credential Bar */
+  .cred-bar { background: var(--teal); padding: 20px 72px; display: flex; justify-content: space-around; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .cred-item { display: flex; align-items: center; gap: 12px; }
+  .cred-num { font-family: 'EB Garamond', serif; font-size: 2.1rem; font-weight: 600; color: white; line-height: 1; }
+  .cred-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.8); line-height: 1.4; }
+  .cred-divider { width: 1px; height: 36px; background: rgba(255,255,255,0.25); }
+
+  /* Marquee */
+  .marquee-wrap { overflow: hidden; background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 13px 0; }
+  .marquee-inner { display: flex; animation: marquee 34s linear infinite; white-space: nowrap; }
+  .marquee-item { display: inline-flex; align-items: center; gap: 20px; padding: 0 20px; font-size: 0.67rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+  .marquee-item span { color: var(--teal-light); font-size: 0.5rem; }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* Sections */
+  .section { padding: 96px 72px; }
+  .section-alt { background: var(--off-white); }
+  .section-dark { background: var(--navy); }
+
+  .sec-label { display: inline-flex; align-items: center; gap: 12px; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; }
+  .sec-label::before { content: ''; width: 24px; height: 1px; background: var(--teal); display: block; }
+  .sec-label.light { color: var(--teal-light); }
+  .sec-label.light::before { background: var(--teal-light); }
+  .sec-heading { font-family: 'EB Garamond', serif; font-size: clamp(1.9rem, 3vw, 2.8rem); font-weight: 500; line-height: 1.18; color: var(--navy); }
+  .sec-heading em { font-style: italic; color: var(--teal); }
+  .sec-heading.light { color: white; }
+  .sec-heading.light em { color: var(--teal-light); }
+  .sec-body { font-size: 0.95rem; color: var(--muted); line-height: 1.85; font-weight: 300; max-width: 460px; }
+  .sec-body.light { color: rgba(255,255,255,0.55); }
+  .section-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end; margin-bottom: 60px; }
+  .section-intro-right { display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end; }
+
+  /* Services Grid */
+  .services-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+  .srv-card { padding: 44px 40px; background: white; border-right: 1px solid var(--rule); position: relative; overflow: hidden; transition: background 0.3s; }
+  .srv-card:last-child { border-right: none; }
+  .srv-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--teal); transform: scaleX(0); transform-origin: left; transition: transform 0.35s cubic-bezier(0.23,1,0.32,1); }
+  .srv-card:hover::before { transform: scaleX(1); }
+  .srv-card:hover { background: var(--off-white); }
+  .srv-num { font-family: 'EB Garamond', serif; font-size: 3rem; font-weight: 400; font-style: italic; color: var(--rule); line-height: 1; margin-bottom: 20px; transition: color 0.3s; }
+  .srv-card:hover .srv-num { color: #c8d5e8; }
+  .srv-name { font-family: 'Libre Baskerville', serif; font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 14px; line-height: 1.3; }
+  .srv-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.8; font-weight: 300; }
+  .srv-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); text-decoration: none; opacity: 0; transform: translateY(5px); transition: opacity 0.3s, transform 0.3s; }
+  .srv-card:hover .srv-link { opacity: 1; transform: translateY(0); }
+
+  /* Ruled divider */
+  .ruled-divider { display: flex; align-items: center; gap: 20px; padding: 0 72px; }
+  .ruled-divider-line { flex: 1; height: 1px; background: var(--rule); }
+  .ruled-divider-text { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--light-text); }
+
+  /* Legalisation */
+  .legal-grid { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+  .legal-pane { padding: 56px 52px; background: white; border-right: 1px solid var(--rule); }
+  .legal-pane:last-child { border-right: none; background: var(--off-white); }
+  .legal-pane-head { display: flex; align-items: flex-start; gap: 20px; padding-bottom: 28px; margin-bottom: 28px; border-bottom: 1px solid var(--rule); }
+  .legal-icon-wrap { width: 48px; height: 48px; flex-shrink: 0; background: var(--teal-pale); display: flex; align-items: center; justify-content: center; border-radius: 2px; }
+  .legal-icon-wrap svg { width: 22px; height: 22px; stroke: var(--teal); }
+  .legal-pane-subtitle { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal); margin-bottom: 4px; display: block; }
+  .legal-pane-title { font-family: 'Libre Baskerville', serif; font-size: 1.3rem; font-weight: 700; color: var(--navy); line-height: 1.25; }
+  .legal-list { list-style: none; }
+  .legal-list li { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--rule); font-size: 0.87rem; color: var(--muted); line-height: 1.72; font-weight: 300; transition: color 0.2s, padding-left 0.2s; }
+  .legal-list li:last-child { border-bottom: none; }
+  .legal-list li:hover { color: var(--text); padding-left: 5px; }
+  .legal-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 8px; }
+  .legal-item-title { font-weight: 700; color: var(--navy); display: block; margin-bottom: 3px; font-size: 0.88rem; }
+
+  /* Draft Table */
+  .draft-table { border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+  .draft-table-head { display: grid; grid-template-columns: 60px 1fr 2fr; background: var(--navy); padding: 18px 32px; gap: 20px; }
+  .draft-table-head span { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .draft-row { display: grid; grid-template-columns: 60px 1fr 2fr; padding: 22px 32px; gap: 20px; border-bottom: 1px solid var(--rule); background: white; align-items: start; transition: background 0.2s; }
+  .draft-row:last-child { border-bottom: none; }
+  .draft-row:hover { background: var(--off-white); }
+  .draft-row.highlight { background: var(--teal-pale); }
+  .draft-row.highlight:hover { background: #d8eff0; }
+  .draft-row-num { font-family: 'EB Garamond', serif; font-style: italic; font-size: 1.1rem; color: var(--light-text); padding-top: 2px; }
+  .draft-row-title { font-family: 'Libre Baskerville', serif; font-size: 0.9rem; font-weight: 700; color: var(--navy); line-height: 1.3; padding-top: 2px; }
+  .draft-row-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.72; font-weight: 300; }
+
+  /* Further Services */
+  .further-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+  .further-card { background: white; border: 1px solid var(--rule); border-radius: 4px; padding: 40px 36px; border-top: 3px solid var(--teal); transition: box-shadow 0.3s, transform 0.3s; }
+  .further-card:hover { box-shadow: 0 8px 32px rgba(11,22,40,0.1); transform: translateY(-3px); }
+  .further-card-ico { width: 44px; height: 44px; background: var(--teal-pale); border-radius: 2px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+  .further-card-ico svg { width: 22px; height: 22px; stroke: var(--teal); }
+  .further-ttl { font-family: 'Libre Baskerville', serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; line-height: 1.3; }
+  .further-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.8; font-weight: 300; }
+  .further-tag { display: inline-block; margin-top: 16px; padding: 4px 12px; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; background: var(--teal-pale); color: var(--teal); border-radius: 2px; }
+
+  /* Why Us */
+  .why-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+  .why-perks { display: flex; flex-direction: column; }
+  .perk { display: flex; gap: 22px; padding: 28px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .perk:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
+  .perk-ico { width: 44px; height: 44px; flex-shrink: 0; background: rgba(0,159,165,0.15); border-radius: 2px; display: flex; align-items: center; justify-content: center; transition: background 0.25s; }
+  .perk:hover .perk-ico { background: rgba(0,159,165,0.28); }
+  .perk-ico svg { width: 20px; height: 20px; stroke: var(--teal-light); }
+  .perk h4 { font-size: 0.95rem; font-weight: 700; color: white; margin-bottom: 5px; }
+  .perk p { font-size: 0.83rem; color: rgba(255,255,255,0.5); line-height: 1.75; font-weight: 300; }
+  .why-statement { position: sticky; top: 100px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 52px 48px; }
+  .why-statement-logo { height: 52px; margin-bottom: 32px; display: block; filter: brightness(10) opacity(0.9); }
+  .why-statement-rule { height: 1px; background: rgba(255,255,255,0.12); margin-bottom: 32px; }
+  .why-quote { font-family: 'EB Garamond', serif; font-style: italic; font-size: 1.25rem; color: rgba(255,255,255,0.8); line-height: 1.65; margin-bottom: 28px; }
+  .why-quote-mark { font-family: 'EB Garamond', serif; font-size: 4rem; color: var(--teal); line-height: 0.5; display: block; margin-bottom: 16px; opacity: 0.6; }
+  .why-sig { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal-light); }
+  .why-sig-title { font-size: 0.7rem; color: rgba(255,255,255,0.35); margin-top: 3px; letter-spacing: 0.06em; }
+
+  /* CTA */
+  .cta-section { background: var(--navy-light); border-top: 1px solid rgba(255,255,255,0.07); padding: 96px 72px; display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center; }
+  .cta-heading { font-family: 'EB Garamond', serif; font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 500; line-height: 1.15; color: white; margin-bottom: 16px; }
+  .cta-heading em { font-style: italic; color: var(--teal-light); }
+  .cta-sub { font-size: 0.95rem; color: rgba(255,255,255,0.5); line-height: 1.8; font-weight: 300; max-width: 540px; }
+  .cta-btns { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
+  .btn-whatsapp { display: inline-flex; align-items: center; gap: 10px; background: #25D366; color: white; text-decoration: none; padding: 14px 32px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px; transition: background 0.25s, transform 0.25s; border: 2px solid #25D366; }
+  .btn-whatsapp:hover { background: #1ebe57; border-color: #1ebe57; transform: translateY(-1px); }
+
+  /* Footer */
+  footer { background: var(--navy); border-top: 3px solid var(--teal); padding: 72px; display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 60px; }
+  .footer-logo { height: 50px; margin-bottom: 14px; display: block; filter: brightness(10) opacity(0.85); }
+  .footer-name { font-family: 'Libre Baskerville', serif; font-size: 1rem; font-weight: 700; color: white; margin-bottom: 3px; }
+  .footer-sub { font-size: 0.67rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 18px; }
+  .footer-about { font-size: 0.82rem; color: rgba(255,255,255,0.4); line-height: 1.8; font-weight: 300; max-width: 260px; }
+  .footer-col h5 { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul li a { font-size: 0.82rem; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: white; }
+  .footer-bottom { background: var(--navy); padding: 18px 72px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.07); }
+  .footer-bottom p { font-size: 0.7rem; color: rgba(255,255,255,0.3); letter-spacing: 0.05em; }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s cubic-bezier(0.23,1,0.32,1), transform 0.7s cubic-bezier(0.23,1,0.32,1); }
+  .reveal.visible { opacity: 1; transform: none; }
+  .d1{transition-delay:0.08s}.d2{transition-delay:0.16s}.d3{transition-delay:0.24s}.d4{transition-delay:0.32s}
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:none} }
+
+  /* Responsive */
+  @media(max-width:1024px){
+    .top-bar,.cred-bar,.section,footer,.footer-bottom,.cta-section,.ruled-divider{padding-left:24px;padding-right:24px}
+    nav{padding:0 24px}
+    .hero{grid-template-columns:1fr;min-height:auto}
+    .hero-content{padding:80px 24px 60px}
+    .hero-panel{display:none}
+    .section-intro{grid-template-columns:1fr;gap:20px}
+    .section-intro-right{align-items:flex-start}
+    .services-grid{grid-template-columns:1fr}
+    .srv-card{border-right:none;border-bottom:1px solid var(--rule)}
+    .legal-grid{grid-template-columns:1fr}
+    .legal-pane{border-right:none;border-bottom:1px solid var(--rule)}
+    .draft-table-head,.draft-row{grid-template-columns:40px 1fr}
+    .draft-table-head span:last-child,.draft-row-desc{display:none}
+    .further-grid{grid-template-columns:1fr}
+    .why-layout{grid-template-columns:1fr}
+    .why-statement{position:static}
+    .cta-section{grid-template-columns:1fr}
+    .cta-btns{align-items:flex-start;flex-direction:row;flex-wrap:wrap}
+    footer{grid-template-columns:1fr 1fr;padding:40px 24px;gap:32px}
+    .footer-bottom{padding:16px 24px;flex-direction:column;gap:6px;text-align:center}
+    .nav-links{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="top-bar">
+  <p>Global Legal Administrators &mdash; Trusted Legal Administration &amp; Consulting across South Africa</p>
+  <div class="top-bar-right">
+    <a href="mailto:info@globallegal.co.za">Community trusted</a>
+    <div class="top-bar-divider"></div>
+    <a href="#">Available 7 Days a Week</a>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav id="nav">
+  <a href="#" class="logo-wrap">
+    <img class="logo-img"
+      src="https://img1.wsimg.com/isteam/ip/43b36fa2-8540-4df3-b6c0-2f459f412b6a/GoDaddyStudioProject%20(2024-05-08%2C%2017-28-13).png/:/rs=h:96,cg:true,m/qt=q:95"
+      alt="Global Legal Administrators"
+      onerror="this.style.display='none'">
+    <div class="logo-divider"></div>
+    <div class="logo-text-wrap">
+      <span class="logo-name">Global Legal Administrators</span>
+      <span class="logo-sub">Legal Administration &amp; Consulting</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#legalisation">Legalisation</a></li>
+    <li><a href="#drafting">Drafting</a></li>
+    <li><a href="#further">Further Services</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Contact Us</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-rule">
+      <div class="hero-rule-line"></div>
+      <span class="hero-rule-text">Established Legal Administrators &mdash; South Africa</span>
+    </div>
+    <h1>Your trusted<br>destination for<br><em>legal administration</em><br>and consulting.</h1>
+    <p class="hero-sub">Global Legal Administrators provides professional, confidential legal administration and consulting services to individuals and businesses across South Africa — available seven days a week.</p>
+    <div class="hero-actions">
+      <a href="#services" class="btn-primary">
+        View Our Services
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#contact" class="btn-ghost">Contact Us</a>
+    </div>
+  </div>
+  <div class="hero-panel">
+    <div class="hero-panel-title">Areas of Practice</div>
+    <ul class="hero-service-list">
+      <li>Police Clearance Certificates</li>
+      <li>Expungement of Criminal Records</li>
+      <li>Presidential Pardons</li>
+      <li>Apostille by DIRCO</li>
+      <li>High Court Authentication</li>
+      <li>Domestic Violence Applications</li>
+      <li>Harassment Order Applications</li>
+      <li>Letters of Demand</li>
+      <li>UIF Claim Submissions</li>
+      <li>SAQA Verification</li>
+      <li>Insurance Claims &amp; Ombudsman</li>
+      <li>Forensic Investigations</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Credential Bar -->
+<div class="cred-bar">
+  <div class="cred-item">
+    <span class="cred-num">7</span>
+    <span class="cred-label">Days a week<br>available</span>
+  </div>
+  <div class="cred-divider"></div>
+  <div class="cred-item">
+    <span class="cred-num">12+</span>
+    <span class="cred-label">Specialist<br>services offered</span>
+  </div>
+  <div class="cred-divider"></div>
+  <div class="cred-item">
+    <span class="cred-num">100%</span>
+    <span class="cred-label">Confidential &amp;<br>professional</span>
+  </div>
+  <div class="cred-divider"></div>
+  <div class="cred-item">
+    <span class="cred-num">SA</span>
+    <span class="cred-label">Nationwide<br>coverage</span>
+  </div>
+</div>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <div class="marquee-item"><span>◆</span> Police Clearance Certificates</div>
+    <div class="marquee-item"><span>◆</span> Expungement of Criminal Records</div>
+    <div class="marquee-item"><span>◆</span> Presidential Pardons</div>
+    <div class="marquee-item"><span>◆</span> Apostille by DIRCO</div>
+    <div class="marquee-item"><span>◆</span> High Court Authentication</div>
+    <div class="marquee-item"><span>◆</span> Domestic Violence Applications</div>
+    <div class="marquee-item"><span>◆</span> Letters of Demand</div>
+    <div class="marquee-item"><span>◆</span> UIF Claim Submissions</div>
+    <div class="marquee-item"><span>◆</span> SAQA Verification</div>
+    <div class="marquee-item"><span>◆</span> Forensic Investigations</div>
+    <div class="marquee-item"><span>◆</span> Police Clearance Certificates</div>
+    <div class="marquee-item"><span>◆</span> Expungement of Criminal Records</div>
+    <div class="marquee-item"><span>◆</span> Presidential Pardons</div>
+    <div class="marquee-item"><span>◆</span> Apostille by DIRCO</div>
+    <div class="marquee-item"><span>◆</span> High Court Authentication</div>
+    <div class="marquee-item"><span>◆</span> Domestic Violence Applications</div>
+    <div class="marquee-item"><span>◆</span> Letters of Demand</div>
+    <div class="marquee-item"><span>◆</span> UIF Claim Submissions</div>
+    <div class="marquee-item"><span>◆</span> SAQA Verification</div>
+    <div class="marquee-item"><span>◆</span> Forensic Investigations</div>
+  </div>
+</div>
+
+<!-- Core Services -->
+<div id="services" class="section">
+  <div class="section-intro reveal">
+    <div>
+      <div class="sec-label">Areas of Practice</div>
+      <h2 class="sec-heading">Core legal<br><em>administration services</em></h2>
+    </div>
+    <div class="section-intro-right">
+      <p class="sec-body">Our primary areas of practice address the most common legal administration needs of South Africans — handled with professionalism, accuracy and care.</p>
+    </div>
+  </div>
+  <div class="services-grid">
+    <div class="srv-card reveal">
+      <div class="srv-num">01</div>
+      <h3 class="srv-name">Police Clearance Certificate</h3>
+      <p class="srv-desc">Applying for a new position, emigrating, or travelling internationally? We assist in obtaining your official SAPS Police Clearance Certificate confirming your criminal record status — ready for all your requirements.</p>
+      <a href="#contact" class="srv-link">Enquire now &rarr;</a>
+    </div>
+    <div class="srv-card reveal d1">
+      <div class="srv-num">02</div>
+      <h3 class="srv-name">Expungement of Criminal Records</h3>
+      <p class="srv-desc">You may be eligible to have your criminal record lawfully cleared from the National Criminal Register. We guide you through every step of the eligibility assessment and formal application process.</p>
+      <a href="#contact" class="srv-link">Enquire now &rarr;</a>
+    </div>
+    <div class="srv-card reveal d2">
+      <div class="srv-num">03</div>
+      <h3 class="srv-name">Presidential Pardon</h3>
+      <p class="srv-desc">Where the requirements for expungement are not met, a Presidential Pardon under Section 84(2)(j) of the Constitution of the Republic of South Africa may provide the relief you need. We assist with your full application.</p>
+      <a href="#contact" class="srv-link">Enquire now &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<div class="ruled-divider"><div class="ruled-divider-line"></div><span class="ruled-divider-text">Document Legalisation</span><div class="ruled-divider-line"></div></div>
+
+<!-- Legalisation -->
+<div id="legalisation" class="section section-alt" style="padding-top:72px;">
+  <div class="section-intro reveal">
+    <div>
+      <div class="sec-label">International Documents</div>
+      <h2 class="sec-heading">Legalisation of<br><em>official documents</em></h2>
+    </div>
+    <div class="section-intro-right">
+      <p class="sec-body">These services confer legal validity upon South African official public documents, enabling their lawful use outside the Republic for employment, travel and legal purposes.</p>
+    </div>
+  </div>
+  <div class="legal-grid reveal">
+    <div class="legal-pane">
+      <div class="legal-pane-head">
+        <div class="legal-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="legal-pane-title">Apostille by DIRCO</div>
+        </div>
+      </div>
+      <ul class="legal-list">
+        <li><div class="legal-dot"></div><div><span class="legal-item-title">Official Document Legalisation</span>Legal validity is conferred upon South African public documents, authorising their use in countries party to the Hague Convention.</div></li>
+        <li><div class="legal-dot"></div><div><span class="legal-item-title">Accepted Document Types</span>Birth, marriage and death certificates, academic qualifications, court orders, affidavits and other public documents.</div></li>
+        <li><div class="legal-dot"></div><div><span class="legal-item-title">Priority Processing Available</span>Expedited options are available where there are urgent international deadlines or imminent travel requirements.</div></li>
+      </ul>
+    </div>
+    <div class="legal-pane">
+      <div class="legal-pane-head">
+        <div class="legal-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="legal-pane-title">Apostille by the High Court</div>
+        </div>
+      </div>
+      <ul class="legal-list">
+        <li><div class="legal-dot"></div><div><span class="legal-item-title">Certificate of Authentication</span>Where a destination country is not a signatory to the Hague Convention, a Certificate of Authentication by the High Court is required.</div></li>
+        <li><div class="legal-dot"></div><div><span class="legal-item-title">Country-Specific Guidance</span>We advise on the precise legalisation route required for each destination country to ensure full legal recognition abroad.</div></li>
+        <li><div class="legal-dot"></div><div><span class="legal-item-title">Comprehensive Assistance</span>End-to-end service management from initial document preparation through to delivery of authenticated documentation.</div></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="ruled-divider"><div class="ruled-divider-line"></div><span class="ruled-divider-text">Drafting of Documents</span><div class="ruled-divider-line"></div></div>
+
+<!-- Drafting -->
+<div id="drafting" class="section" style="padding-top:72px;">
+  <div class="section-intro reveal">
+    <div>
+      <div class="sec-label">Document Preparation</div>
+      <h2 class="sec-heading">Drafting of legal<br><em>documents &amp; applications</em></h2>
+    </div>
+    <div class="section-intro-right">
+      <p class="sec-body">Professional preparation of legal documents, applications and correspondence — drafted in accordance with applicable South African legislation and managed on your behalf.</p>
+    </div>
+  </div>
+  <div class="draft-table reveal">
+    <div class="draft-table-head">
+      <span>#</span>
+      <span>Document / Service</span>
+      <span>Description</span>
+    </div>
+    <div class="draft-row">
+      <span class="draft-row-num">i</span>
+      <div class="draft-row-title">Domestic Violence Application</div>
+      <p class="draft-row-desc">Drafting of domestic violence applications in accordance with the Domestic Violence Act 116 of 1998 and the Domestic Violence Amendment Act 14 of 2021.</p>
+    </div>
+    <div class="draft-row">
+      <span class="draft-row-num">ii</span>
+      <div class="draft-row-title">Harassment Order Application</div>
+      <p class="draft-row-desc">Preparation of harassment order applications pursuant to the Protection from Harassment Act 17 of 2011, safeguarding your right to live free from harassment.</p>
+    </div>
+    <div class="draft-row">
+      <span class="draft-row-num">iii</span>
+      <div class="draft-row-title">Small Claims Court Assistance</div>
+      <p class="draft-row-desc">Legal advice and full assistance with Small Claims Court proceedings. Note: jurisdiction is limited to civil disputes not exceeding R20,000.</p>
+    </div>
+    <div class="draft-row">
+      <span class="draft-row-num">iv</span>
+      <div class="draft-row-title">Letter of Demand</div>
+      <p class="draft-row-desc">Preparation of a formal letter of demand in accordance with Section 129 of the National Credit Act (NCA) — an official demand for money lawfully owed.</p>
+    </div>
+    <div class="draft-row">
+      <span class="draft-row-num">v</span>
+      <div class="draft-row-title">Letter of No Impediment</div>
+      <p class="draft-row-desc">A legal document certifying current marital status, ordinarily requested by foreign authorities when South African nationals seek to marry abroad. Sourced from the Department of Home Affairs.</p>
+    </div>
+    <div class="draft-row">
+      <span class="draft-row-num">vi</span>
+      <div class="draft-row-title">UIF Claim Submission</div>
+      <p class="draft-row-desc">Assistance with Unemployment Insurance Fund (UIF) claim submissions, providing short-term relief to workers who have become unemployed or are unable to work.</p>
+    </div>
+    <div class="draft-row">
+      <span class="draft-row-num">vii</span>
+      <div class="draft-row-title">SAQA Verification</div>
+      <p class="draft-row-desc">Facilitation of South African Qualifications Authority (SAQA) verification letters confirming the legitimacy and recognition of qualifications.</p>
+    </div>
+    <div class="draft-row highlight">
+      <span class="draft-row-num">+</span>
+      <div class="draft-row-title">Facilitate Return of Service</div>
+      <p class="draft-row-desc">Full facilitation of the return of service for all of the above documents — managed entirely on your behalf.</p>
+    </div>
+  </div>
+</div>
+
+<div class="ruled-divider"><div class="ruled-divider-line"></div><span class="ruled-divider-text">Further Services</span><div class="ruled-divider-line"></div></div>
+
+<!-- Further Services -->
+<div id="further" class="section section-alt" style="padding-top:72px;">
+  <div class="section-intro reveal">
+    <div>
+      <div class="sec-label">Specialist Services</div>
+      <h2 class="sec-heading">Additional areas<br><em>of expertise</em></h2>
+    </div>
+    <div class="section-intro-right">
+      <p class="sec-body">Our specialist services extend beyond standard legal administration, delivered by experienced professionals with sector-specific knowledge.</p>
+    </div>
+  </div>
+  <div class="further-grid">
+    <div class="further-card reveal">
+      <div class="further-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M9 7H6a2 2 0 00-2 2v9a2 2 0 002 2h9a2 2 0 002-2v-3M9 7l3 3m0 0l3-3m-3 3V3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3 class="further-ttl">Insurance Claims</h3>
+      <p class="further-desc">Independent assessment of insurance claims provided by highly experienced personnel. We assist with short-term insurance claims and disputes involving Community Schemes, Body Corporates and Managing Agents.</p>
+      <span class="further-tag">Short-term Insurance · Community Schemes</span>
+    </div>
+    <div class="further-card reveal d1">
+      <div class="further-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 6h18M7 12h10M11 18h2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3 class="further-ttl">Appeals &amp; Ombudsman Referrals</h3>
+      <p class="further-desc">We facilitate the referral of disputes to the appropriate Ombudsman for Short-term Insurance matters and Community Schemes, ensuring an independent and fair resolution process for all parties.</p>
+      <span class="further-tag">Appeals · Dispute Resolution</span>
+    </div>
+    <div class="further-card reveal d2">
+      <div class="further-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3 class="further-ttl">Forensic Investigations</h3>
+      <p class="further-desc">Discreet and thorough forensic investigative services conducted by specialist investigators. Please contact us directly for a confidential consultation regarding your specific matter.</p>
+      <span class="further-tag">Confidential · Specialist</span>
+    </div>
+  </div>
+</div>
+
+<!-- Why Us -->
+<div class="section section-dark">
+  <div class="why-layout">
+    <div>
+      <div class="sec-label light reveal">Why Choose Us</div>
+      <h2 class="sec-heading light reveal d1" style="margin-bottom:44px;">The benefits of<br><em>choosing Global Legal</em></h2>
+      <div class="why-perks">
+        <div class="perk reveal">
+          <div class="perk-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><h4>Available Seven Days a Week</h4><p>Legal matters do not confine themselves to business hours. We are accessible seven days a week to assist with any queries or urgent requirements.</p></div>
+        </div>
+        <div class="perk reveal d1">
+          <div class="perk-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><h4>Tailored Service Packages</h4><p>Whether your matter is urgent or you are preparing well in advance, our custom packages accommodate your specific timeline and requirements without compromise.</p></div>
+        </div>
+        <div class="perk reveal d2">
+          <div class="perk-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><h4>Fully Confidential &amp; Professional</h4><p>All matters are handled with the utmost discretion. Your privacy and the integrity of your case remain our primary concerns at every stage.</p></div>
+        </div>
+        <div class="perk reveal d3">
+          <div class="perk-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><h4>Nationwide Coverage</h4><p>We serve clients throughout South Africa. Regardless of your location, professional legal administration assistance is always within reach.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="why-statement reveal d1">
+      <img class="why-statement-logo"
+        src="https://img1.wsimg.com/isteam/ip/43b36fa2-8540-4df3-b6c0-2f459f412b6a/GoDaddyStudioProject%20(2024-05-08%2C%2017-28-13).png/:/rs=h:96,cg:true,m/qt=q:95"
+        alt="Global Legal Administrators"
+        onerror="this.style.display='none'">
+      <div class="why-statement-rule"></div>
+      <span class="why-quote-mark">&ldquo;</span>
+      <p class="why-quote">Your wish is our command — browse through our services and packages and feel free to contact us with any questions or concerns.</p>
+      <div class="why-sig">The Global Legal Administrators Team</div>
+      <div class="why-sig-title">Legal Administration &amp; Consulting &middot; South Africa</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section id="contact" class="cta-section">
+  <div>
+    <h2 class="cta-heading">Ready to resolve<br>your <em>legal matters?</em></h2>
+    <p class="cta-sub">Reach out to the Global Legal Administrators team today. We are available seven days a week and ready to assist with any of our services or to discuss a tailored package suited to your needs.</p>
+  </div>
+  <div class="cta-btns">
+    <a href="mailto:globallegal12@gmail.com" class="btn-primary">
+      Email Us
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+    </a>
+    <a href="tel:+27847516124" class="btn-ghost">
+      Call Us
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+    </a>
+    <a href="https://wa.me/27847516124" target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+      WhatsApp Us
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div>
+    <img class="footer-logo"
+      src="https://img1.wsimg.com/isteam/ip/43b36fa2-8540-4df3-b6c0-2f459f412b6a/GoDaddyStudioProject%20(2024-05-08%2C%2017-28-13).png/:/rs=h:96,cg:true,m/qt=q:95"
+      alt="Global Legal Administrators"
+      onerror="this.style.display='none'">
+    <div class="footer-name">Global Legal Administrators</div>
+    <div class="footer-sub">Legal Administration &amp; Consulting</div>
+    <p class="footer-about">Your trusted destination for legal administration and consulting across South Africa. Available seven days a week.</p>
+  </div>
+  <div class="footer-col">
+    <h5>Core Services</h5>
+    <ul>
+      <li><a href="#services">Police Clearance Certificate</a></li>
+      <li><a href="#services">Expungement of Records</a></li>
+      <li><a href="#services">Presidential Pardon</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h5>Legalisation &amp; Drafting</h5>
+    <ul>
+      <li><a href="#legalisation">Apostille by DIRCO</a></li>
+      <li><a href="#legalisation">High Court Authentication</a></li>
+      <li><a href="#drafting">Document Drafting</a></li>
+      <li><a href="#drafting">UIF &amp; SAQA</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h5>Company</h5>
+    <ul>
+      <li><a href="#further">Further Services</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+      <li><a href="#services">Our Packages</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>&copy; 2025 globallegal.co.za &mdash; All Rights Reserved</p>
+  <p>Trusted Legal Administration &amp; Consulting &mdash; South Africa</p>
+  <p>Powered by: Tyrell Baker</p>
+</div>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('elevated', scrollY > 10));
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -28px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+    });
+  });
+</script>
+</body>
+</html>
